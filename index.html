@@ -21,6 +21,14 @@
 
     <script>
 
+      // control stuff with the querystring
+      var qs   = window.location.search.substr(1).split('&'),
+          args = {};
+      qs.forEach(function(arg) {
+        arg = arg.split('=');
+        args[arg[0]] = arg[1];
+      });
+
       // source video is from http://www.html5tutorial.info/html5-video.php
       var video = document.getElementById('source-video');
       
@@ -56,13 +64,14 @@
          intermediary to the composite
       */
 
-      var drawFrame;
+      var drawFrame,
+          delay = +args.delay || 500;  // tweak this to get a clearer composite image
 
       video.onplay = function() {
 
         drawFrame = setInterval(function() {
           copyFrameToComposite();
-        }, 10);
+        }, delay);
       
       };
 
