@@ -18,8 +18,8 @@
 
     <script>
 
-      /* ideally you'd grab frames from an html5 video element with getImageData(), 
-         but i'm too lazy for that so here's a bunch of screenshots of 
+      /* ideally you'd copy frames from an html5 video element with drawImage([video DOM element], 0, 0)
+         on a setInterval but i'm too lazy for that so here's a bunch of screenshots of 
          tom hardy smashing someone's head into a counter in my favorite movie ever, Bronson 
       */
 
@@ -45,8 +45,10 @@
         context.globalCompositeOperation = 'darker';
       });
 
-      /* then a save button function goes here that does a context.getImageData() and returns
-         a base64 encoded image string
+      /* then a save button function goes here like
+         canvas.onclick = function(){
+           window.open(this.toDataURL());
+         };
       */
 
 
