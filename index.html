@@ -30,6 +30,8 @@
       var compositeCanvas  = document.getElementById('composite'),
           compositeContext = compositeCanvas.getContext('2d');
 
+      compositeContext.globalCompositeOperation = 'darker';
+
       // click on the composite canvas (last pane) any time to get a composite png
       compositeCanvas.onclick = function(){
         window.open(this.toDataURL());
@@ -44,9 +46,8 @@
 
         tmpContext.drawImage(video, 0, 0);
         compositeContext.drawImage(tmpCanvas, 0, 0);
-        compositeContext.globalCompositeOperation = 'darker';
 
-      };
+      }
       
 
       /* when the video plays, start copying frames from the video to the 
