@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <style>
+
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <video id='source-video' width='320' height='240' controls='true'>
+        <source src='video.mp4'>
+    </video>
+    <canvas width='320' height='240' id='tmp'></canvas>
+    <canvas width='320' height='240' id='composite'></canvas>
+
+    <script>
+
+      // source video is from http://www.html5tutorial.info/html5-video.php
+      var video = document.getElementById('source-video');
+      
+      var tmpCanvas  = document.getElementById('tmp'),
+          tmpContext = tmpCanvas.getContext('2d');
+
+      var compositeCanvas  = document.getElementById('composite'),
+          compositeContext = compositeCanvas.getContext('2d');
+
+      // click on the composite canvas (last pane) any time to get a composite png
+      compositeCanvas.onclick = function(){
+        window.open(this.toDataURL());
+      };
+
+      function copyFrameToComposite() {
+
+        /* for some reason, globalCompositeOperation doesn't work with html5 
+           video elements on chrome, so i'm copying the frame to an intermediary
+           then copying that to the final composite canvas
+        */
+
+        tmpContext.drawImage(video, 0, 0);
+        compositeContext.drawImage(tmpCanvas, 0, 0);
+        compositeContext.globalCompositeOperation = 'darker';
+
+      };
+      
+
+      /* when the video plays, start copying frames from the video to the 
+         intermediary to the composite
+      */
+
+      var drawFrame;
+
+      video.onplay = function() {
+
+        drawFrame = setInterval(function() {
+          copyFrameToComposite();
+        }, 10);
+      
+      };
+
+      video.onended = function(e) { 
+        clearInterval(drawFrame); 
+      };
+
+
+    </script>
+
+  </body>
+</html>
