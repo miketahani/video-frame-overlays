@@ -32,7 +32,9 @@
 
       compositeContext.globalCompositeOperation = 'darker';
 
-      // click on the composite canvas (last pane) any time to get a composite png
+      /* click on the composite canvas (last pane) any time to get a composite png.
+         for some reason, you have to refresh the opened window to get the image.
+      */
       compositeCanvas.onclick = function(){
         window.open(this.toDataURL());
       };
