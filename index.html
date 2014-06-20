@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <style>
+
+      body,
+      svg {
+        margin: 0;
+        padding: 0;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <canvas width='1280' height='688' id='composite'></canvas>
+
+    <script>
+
+      /* ideally you'd grab frames from an html5 video element with getImageData(), 
+         but i'm too lazy for that so here's a bunch of screenshots of 
+         tom hardy smashing someone's head into a counter in my favorite movie ever, Bronson 
+      */
+
+      var snaps = "vlcsnap-2014-06-19-21h07m25s202.png,vlcsnap-2014-06-19-21h07m33s29.png,vlcsnap-2014-06-19-21h07m39s89.png,vlcsnap-2014-06-19-21h07m54s237.png,vlcsnap-2014-06-19-21h08m10s140.png,vlcsnap-2014-06-19-21h08m19s228.png".split(',').map(function(d) { return 'snaps/' + d; });
+
+      var canvas = document.getElementById('composite');
+      var context = canvas.getContext('2d');
+
+      function addImageToCanvas(imgUrl) {
+        // grab the image, place it into the canvas
+        var img = new Image();
+        img.src = imgUrl;
+        img.onload = function(){
+          context.drawImage(img, 0, 0);
+        };
+      }
+
+      // loop through all images, adding them to the canvas composite image
+      snaps.forEach(function(snap) {
+        addImageToCanvas(snap);
+        console.log('done', snap);
+        // at the end so we don't composite the first image on a blank background
+        context.globalCompositeOperation = 'darker';
+      });
+
+      /* then a save button function goes here that does a context.getImageData() and returns
+         a base64 encoded image string
+      */
+
+
+    </script>
+
+  </body>
+</html>
